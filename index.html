@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Date Format Example</title>
+</head>
+<body>
+
+<h2>Select a Date:</h2>
+
+<input type="date" id="selectedDate">
+<button onclick="showFormattedDate()">Show Date</button>
+
+<p id="output"></p>
+
+<script>
+  function showFormattedDate() {
+  var selectedDate = new Date(document.getElementById("selectedDate").value);
+
+  var day = selectedDate.getDate();
+  var month = selectedDate.toLocaleString('default', { month: 'long' });
+  var monthShort = selectedDate.toLocaleString('default', { month: 'short' });
+  var year = selectedDate.getFullYear();
+
+  var dayWithSuffix = day + getDayNumberSuffix(day);
+
+  var outputStrings = [
+    selectedDate.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true }),
+    year + ' ' + month,
+    monthShort,
+    day,
+    day + ' ' + month + ' ' + year,
+    day + ' ' + month,
+    day + ' ' + monthShort,
+    month + ' ' + day,
+    dayWithSuffix + ' ' + monthShort
+  ];
+
+  document.getElementById("output").innerHTML = outputStrings.join('<br>');
+}
+
+function getDayNumberSuffix(day) {
+  if (day >= 11 && day <= 13) {
+    return 'th';
+  }
+  switch (day % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+}
+</script>
+</body>
+</html>
